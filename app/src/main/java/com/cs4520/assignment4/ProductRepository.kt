@@ -1,14 +1,10 @@
 package com.cs4520.assignment4
 
 import android.app.Application
-import android.util.Log
 import com.cs4520.assignment4.model.Product
 import com.cs4520.assignment4.model.ProductDao
 import com.cs4520.assignment4.model.ProductDatabase
 import com.cs4520.assignment4.model.api.ProductFactory
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 class ProductRepository(private val application: Application) {
     private var productDao: ProductDao
