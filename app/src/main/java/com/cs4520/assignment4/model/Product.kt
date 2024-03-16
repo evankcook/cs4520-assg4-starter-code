@@ -1,4 +1,4 @@
-package com.cs4520.assignment4
+package com.cs4520.assignment4.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -8,5 +8,5 @@ import androidx.room.PrimaryKey
 data class Product(val type: String,
                    val name: String,
                    val expiryDate: String?,
-                   val price: Int,
+                   val price: Double,
                    @PrimaryKey(autoGenerate = false) val id: Int? = null)

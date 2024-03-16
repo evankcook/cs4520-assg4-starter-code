@@ -1,4 +1,4 @@
-package com.cs4520.assignment4
+package com.cs4520.assignment4.view
 
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.cs4520.assignment4.R
 import com.cs4520.assignment4.databinding.ProductItemBinding
+import com.cs4520.assignment4.model.Product
 
 
 class ProductListAdapter(private val productList: List<Product>) :
@@ -21,7 +23,8 @@ class ProductListAdapter(private val productList: List<Product>) :
 
         fun bind(product: Product) {
             productNameView.text = product.name
-            productPriceView.text = itemView.context.getString(R.string.currency,
+            productPriceView.text = itemView.context.getString(
+                R.string.currency,
                 product.price.toString())
 
             if (product.expiryDate.isNullOrEmpty()) {
@@ -31,15 +34,17 @@ class ProductListAdapter(private val productList: List<Product>) :
                 productExpiryView.text = product.expiryDate
             }
 
-            val backgroundColor = when (product) {
-                is Product.EquipmentProudct -> "#E06666"
-                is Product.FoodProduct -> "#FFD965"
+            val backgroundColor = when (product.type) {
+                "Equipment" -> "#E06666"
+                "Food" -> "#FFD965"
+                else -> "#FFFFFF"
             }
             itemView.setBackgroundColor(Color.parseColor(backgroundColor))
 
-            val image = when (product) {
-                is Product.EquipmentProduct -> R.drawable.equipment
-                is Product.FoodProduct -> R.drawable.food
+            val image = when (product.type) {
+                "Equipment" -> R.drawable.equipment
+                "Food" -> R.drawable.food
+                else -> R.drawable.food
             }
             productImageView.setImageResource(image)
 
