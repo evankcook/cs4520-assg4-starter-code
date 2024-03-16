@@ -37,7 +37,7 @@ class ProductListAdapter(private val productList: List<Product>) :
             val backgroundColor = when (product.type) {
                 "Equipment" -> "#E06666"
                 "Food" -> "#FFD965"
-                else -> "#FFFFFF"
+                else -> "#FFFFFF" // White when type error
             }
             itemView.setBackgroundColor(Color.parseColor(backgroundColor))
 

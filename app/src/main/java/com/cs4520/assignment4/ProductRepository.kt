@@ -18,11 +18,15 @@ class ProductRepository(private val application: Application) {
         return try {
                 val response = ProductFactory.makeProductService().getProductList()
                 if (response.isSuccessful) {
-                    productDao.deleteAllProducts()
                     val validProducts = response.body()!!.filter {
                         (it.type == "Food" || it.type == "Equipment") && it.name.isNotBlank()
                                 && it.price >= 0.0
                     }
+                    // Go to cached data if none of the retrieved data is valid
+                    if (validProducts.isEmpty()) {
+                        throw Exception("API returned no valid data...")
+                    }
+                    productDao.deleteAllProducts()
                     validProducts.forEach { product ->
                         productDao.insert(product)
                     }
