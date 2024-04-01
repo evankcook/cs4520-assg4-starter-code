@@ -5,10 +5,16 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.work.Constraints
+import androidx.work.NetworkType
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.cs4520.assignment4.model.Product
 import kotlinx.coroutines.launch
+import java.util.concurrent.TimeUnit
 
 class ProductViewModel(application: Application) : AndroidViewModel(application) {
+
     private val _products = MutableLiveData<List<Product>>()
     val products: LiveData<List<Product>> = _products
 
@@ -16,6 +22,24 @@ class ProductViewModel(application: Application) : AndroidViewModel(application)
     val isLoading: LiveData<Boolean> = _isLoading
 
     private val repository = ProductRepository(application)
+
+    init {
+        initRefreshProducts(application)
+    }
+
+    private fun initRefreshProducts(application: Application) {
+        val constraints = Constraints.Builder()
+            .setRequiresCharging(false)
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+
+        val workRequest = PeriodicWorkRequestBuilder<RefreshProducts>(1, TimeUnit.HOURS)
+            .setConstraints(constraints)
+            .setInitialDelay(1, TimeUnit.HOURS)
+            .build()
+
+        WorkManager.getInstance(application).enqueue(workRequest)
+    }
 
     fun getProducts(page: Int? = null) {
         _isLoading.value = true

@@ -1,16 +1,16 @@
 package com.cs4520.assignment4
 
-import android.app.Application
+import android.content.Context
 import com.cs4520.assignment4.model.Product
 import com.cs4520.assignment4.model.ProductDao
 import com.cs4520.assignment4.model.ProductDatabase
 import com.cs4520.assignment4.model.api.ProductFactory
 
-class ProductRepository(private val application: Application) {
+class ProductRepository(private val context: Context) {
     private var productDao: ProductDao
 
     init {
-        val database = ProductDatabase.getInstance(application)
+        val database = ProductDatabase.getInstance(context)
         productDao = database.productDao()
     }
 
