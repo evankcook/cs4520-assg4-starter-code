@@ -70,14 +70,15 @@ fun ProductItem(product: Product) {
         Column(
             modifier = Modifier
                 .weight(1f),
-            verticalArrangement = Arrangement.SpaceBetween,
+            verticalArrangement = Arrangement.Center,
         ) {
 
-            Text(text = product.name, color = Color.Black)
+            Text(text = product.name, color = Color.Black, modifier = Modifier.padding(vertical = 5.dp))
             if (!product.expiryDate.isNullOrEmpty()) {
-                Text(text = product.expiryDate, color = Color.Black)
+                Text(text = product.expiryDate, color = Color.Black, modifier = Modifier.padding(vertical = 5.dp))
             }
-            Text(text = "$${product.price}", color = Color.Black)
+            Text(text = "$${String.format("%.2f", product.price)}", color = Color.Black,
+                modifier = Modifier.padding(vertical = 5.dp))
 
         }
     }
