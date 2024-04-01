@@ -1,12 +1,23 @@
 package com.cs4520.assignment4
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.Surface
+import androidx.compose.ui.Modifier
+import androidx.navigation.compose.rememberNavController
 
 
-class MainActivity : AppCompatActivity(){
+class MainActivity : ComponentActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main_activity)
+        setContent {
+            Surface(
+                modifier = Modifier.fillMaxSize(),
+            ) {
+                AppNavHost(navController = rememberNavController())
+            }
+        }
     }
 }
